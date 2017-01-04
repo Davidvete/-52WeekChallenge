@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="vue.min.js"></script>
-    <script src="app.js"></script>
-    <title></title>
+    <title>#52WeekChallenge</title>
     <style>
         .month {
             background: whitesmoke;
@@ -23,6 +22,10 @@
             border: 1px solid #e3e3e3;
             border-radius: 0 !important;
         }
+
+        .sec {
+            border-right: 1px solid #cac7c7;
+        }
     </style>
 </head>
 <body>
@@ -40,6 +43,18 @@
                 #52WeekChallenge
             </a>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="http://www.rookie-manager.com/personal-finance/why-take-on-the-52-week-challenge/">
+                    Article
+                </a>
+            </li>
+            <li>
+                <a href="https://twitter.com/search?q=%2352WeekChallenge&src=typd">
+                    Twitter
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>
 <div class="container" id="app">
@@ -60,10 +75,10 @@
         <section class="month" v-for="week in computedTotals">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 wells">
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sec">
                         Week {{week.weekNumber}}
                     </div>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 sec">
                         deposit: {{week.deposit.toLocaleString()}}
                     </div>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
@@ -76,42 +91,22 @@
     </div>
 </div>
 </body>
+<script src="app.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            starting: 100,
-            message: 'Hello Vue!',
-        },
-        computed: {
-            computedTotals: function () {
-                weeks = new Array();
-                weeks[0] = [];
-                weeks[0]['deposit'] = this.starting;
-                weeks[0]['total'] = this.starting;
-                weeks[0]['weekNumber'] = 1;
-                for (i = 1; i < 52; i++) {
-                    if (i === 1) {
-                        var previousIndex = 0;
-                    }
-                    else {
-                        var previousIndex = i - 1;
-                    }
-                    weeks[i] = [];
-                    weeks[i]['weekNumber'] = i + 1;
-                    weeks[i]['deposit'] = this.starting + weeks[previousIndex]['deposit'];
-                    weeks[i]['total'] = this.starting + weeks[previousIndex]['total'] + weeks[previousIndex]['deposit'];
-                }
-                return weeks;
-            },
-            totalSaved: function () {
-                var lastMonth = this.computedTotals.slice(-1).pop();
-                return lastMonth['total'].toLocaleString();
-            }
-        },
-        mounted: function () {
-            console.log(this.computedTotals);
-        }
-    })
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-89813918-1', 'auto');
+    ga('send', 'pageview');
+
 </script>
 </html>
