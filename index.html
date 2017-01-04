@@ -9,11 +9,9 @@
             background: whitesmoke;
             margin: 5px !important;
         }
-
         #app {
             margin-top: 70px;
         }
-
         .wells {
             min-height: 20px;
             padding: 6px;
@@ -48,6 +46,11 @@
                     Twitter Hashtag
                 </a>
             </li>
+            <li>
+                <a target="_blank" href="https://github.com/bikundo/-52WeekChallenge">
+                    Code
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -56,7 +59,7 @@
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="starting">Starting amount</label>
-                <input id="starting" type="number" step="10" class="form-control" v-model="starting">
+                <input id="starting" type="number" step="5" min="5" class="form-control" v-model="starting">
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -70,7 +73,7 @@
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 wells">
                 <div class="row">
                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sec">
-                        Wk {{week.weekNumber}}
+                        <b>{{week.weekNumber}}</b>
                     </div>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 sec">
                         deposit: {{week.deposit.toLocaleString()}}
