@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="vue.min.js"></script>
+    <script src="app.js"></script>
+    <title></title>
+    <style>
+        .month {
+            background: whitesmoke;
+            margin: 5px !important;
+        }
+
+        #app {
+            margin-top: 70px;
+        }
+
+        .wells {
+            min-height: 20px;
+            padding: 6px;
+            margin-bottom: 5px;
+            background-color: #f5f5f5;
+            border: 1px solid #e3e3e3;
+            border-radius: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                #52WeekChallenge
+            </a>
+        </div>
+    </div>
+</nav>
+<div class="container" id="app">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="starting">Starting amount</label>
+                <input id="starting" type="number" step="10" class="form-control" v-model="starting">
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h3 class="pull-right">
+                total saved : KES {{totalSaved}}
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <section class="month" v-for="week in computedTotals">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 wells">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        Week {{week.weekNumber}}
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                        deposit: {{week.deposit.toLocaleString()}}
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                        Total: {{week.total.toLocaleString()}}
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            starting: 100,
+            message: 'Hello Vue!',
+        },
+        computed: {
+            computedTotals: function () {
+                weeks = new Array();
+                weeks[0] = [];
+                weeks[0]['deposit'] = this.starting;
+                weeks[0]['total'] = this.starting;
+                weeks[0]['weekNumber'] = 1;
+                for (i = 1; i < 52; i++) {
+                    if (i === 1) {
+                        var previousIndex = 0;
+                    }
+                    else {
+                        var previousIndex = i - 1;
+                    }
+                    weeks[i] = [];
+                    weeks[i]['weekNumber'] = i + 1;
+                    weeks[i]['deposit'] = this.starting + weeks[previousIndex]['deposit'];
+                    weeks[i]['total'] = this.starting + weeks[previousIndex]['total'] + weeks[previousIndex]['deposit'];
+                }
+                return weeks;
+            },
+            totalSaved: function () {
+                var lastMonth = this.computedTotals.slice(-1).pop();
+                return lastMonth['total'].toLocaleString();
+            }
+        },
+        mounted: function () {
+            console.log(this.computedTotals);
+        }
+    })
+</script>
+</html>
